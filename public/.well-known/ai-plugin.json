@@ -1,0 +1,535 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "1-Inch Agent",
+        "description": "API for the interaction between users and the 1-Inch APIs through the chat interface.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://6d70-2405-201-e062-f03d-e9e0-213-8aa6-f04b.ngrok-free.app"
+        }
+    ],
+    "x-mb": {
+        "account-id": "golden_comet.near",
+        "email": "johnson@teckastechnologies.com",
+        "assistant": {
+            "name": "1-Inch Portfolio Assistant",
+            "description": "An assistant that provides blockchain-related information and interacts with 1-Inch APIs to assist users.",
+            "instructions": "You are an assistant designed to help users perform various blockchain-related tasks by interacting with the 1-Inch APIs. Your primary functionalities include: 1) Fetching the user's wallet balances, including token details; 2) Analyzing the user's portfolio to determine current values, profit or loss status, and detailed breakdowns; 3) Fetching the list of orders created by the user; 4) Tracking the status of a specific order using its hash; 5) Providing a detailed transaction and wallet history; 6) Allowing users to retrieve all orders linked to a specific evm wallet address. If you reply with the list of details then show in tabular view. Ensure all responses are accurate, user-friendly, and delivered promptly. Be ready to provide clear explanations of blockchain terminology and concepts when necessary. If an error occurs or the requested data isn't available, provide a clear and actionable error message.",
+            "tools": [
+                {
+                    "type": "generate-transaction"
+                },
+                {
+                    "type": "generate-evm-tx"
+                }
+            ],
+            "image": "https://cdn.1inch.io/logo.png",
+            "categories": [
+                "DeFi",
+                "Ai",
+                "1-Inch",
+                "1inch"
+            ],
+            "chainIds": [
+                1
+            ]
+        }
+    },
+    "paths": {
+        "/api/balance": {
+            "get": {
+                "operationId": "getBalance",
+                "summary": "Fetch the user's wallet balances",
+                "description": "Fetch the user's wallet balance details ",
+                "parameters": [
+                    {
+                        "name": "walletAddress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The evm wallet address of the user."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "balances": {
+                                            "type": "object",
+                                            "description": "Fetch balace details of the user with the token details"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orderbook": {
+            "get": {
+                "operationId": "getOrders",
+                "summary": "Fetch the user's orders list from order book",
+                "description": "Fetch the user's list of orders from order book",
+                "parameters": [
+                    {
+                        "name": "walletAddress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The evm wallet address of the user."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "orders": {
+                                            "type": "array",
+                                            "description": "List of orders fetched by the evm wallet address"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orderbook/order": {
+            "get": {
+                "operationId": "getOrderByHash",
+                "summary": "Fetch the user's order from order book by orderHash",
+                "description": "Fetch the user's order from order book by orderHash",
+                "parameters": [
+                    {
+                        "name": "orderHash",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The hash address of the order"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "order": {
+                                            "type": "object",
+                                            "description": "Single order details fetched by the order hash"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/orderbook/events": {
+            "get": {
+                "operationId": "getOrderEventByHash",
+                "summary": "Fetch the order's status like fill or cancel from order book by orderHash",
+                "description": "Fetch the order's status like fill or cancel from order book by orderHash",
+                "parameters": [
+                    {
+                        "name": "orderHash",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The hash address of the order"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "events": {
+                                            "type": "object",
+                                            "description": "Single order details & events fetched by the order hash"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/history": {
+            "get": {
+                "operationId": "getHistory",
+                "summary": "Fetch the wallet history details by the evm wallet address",
+                "description": "Fetch the wallet history by the evm wallet address",
+                "parameters": [
+                    {
+                        "name": "walletAddress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The evm wallet address of the user."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "description": "List of transaction details fetched by the evm wallet address"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/portfolio/holdings": {
+            "get": {
+                "operationId": "getTokenHoldings",
+                "summary": "Fetch the tokens holding by the user portfolio",
+                "description": "Fetch the tokens holding by the user portfolio",
+                "parameters": [
+                    {
+                        "name": "walletAddress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The evm wallet address of the user."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "type": "array",
+                                            "description": "List of token which are in holdings by the evm wallet address"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/portfolio/current-value": {
+            "get": {
+                "operationId": "getPortfolioValue",
+                "summary": "Fetch the current value of portfolio in usd.",
+                "description": "Fetch the current value of portfolio in usd.",
+                "parameters": [
+                    {
+                        "name": "walletAddress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The evm wallet address of the user."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "current-value": {
+                                            "type": "object",
+                                            "description": "Fetched current total value of the portfolio in usd by evm wallet address"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/portfolio/supported-chains": {
+            "get": {
+                "summary": "get the supported chains list information",
+                "description": "get the supported chains list information",
+                "operationId": "getSupportedChains",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "supported-chains": {
+                                            "type": "object",
+                                            "description": "The list of supported chains"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/portfolio/profit-and-loss": {
+            "get": {
+                "operationId": "getPortfolioStatus",
+                "summary": "Analyze the portfolio profits/losses & roi.",
+                "description": "Analyze the portfolio profits/losses & roi.",
+                "parameters": [
+                    {
+                        "name": "walletAddress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The evm wallet address of the user."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statement": {
+                                            "type": "object",
+                                            "description": "Analyed profit/loss & roi statements."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/fusion-order/maker-orders": {
+            "get": {
+                "operationId": "getMakerOrders",
+                "summary": "Fetch the orders by the maker address",
+                "description": "Fetch the orders by the maker address",
+                "parameters": [
+                    {
+                        "name": "makerAddress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The evm wallet address of the order maker."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "orders": {
+                                            "type": "object",
+                                            "description": "List of orders details by the maker evm wallet address."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
