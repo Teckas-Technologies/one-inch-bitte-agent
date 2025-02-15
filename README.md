@@ -9,7 +9,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
 
 **Tooling:**
 
-[![Use Case](https://img.shields.io/badge/Use%20Case-MMake%201-Inch%20Operations%20Easier-orange)](#)
+[![Use Case](https://img.shields.io/badge/Use%20Case-Make%20One-Inch%20Operations%20Easier-orange)](#)
 [![Tools](https://img.shields.io/badge/Tools-web3.js%2C%20big.js-blue)](#)
 [![Framework](https://img.shields.io/badge/Framework-Node.js-blue)](#)
 
