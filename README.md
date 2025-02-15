@@ -9,7 +9,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
 
 **Tooling:**
 
-[![Use Case](https://img.shields.io/badge/Use%20Case-Make%1-Inch%20Operations%20Easier-orange)](#)
+[![Use Case](https://img.shields.io/badge/Use%20Case-MMake%201-Inch%20Operations%20Easier-orange)](#)
 [![Tools](https://img.shields.io/badge/Tools-web3.js%2C%20big.js-blue)](#)
 [![Framework](https://img.shields.io/badge/Framework-Node.js-blue)](#)
 
@@ -26,7 +26,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
 
 ## User Flow
 
-1. **Fetch Wallet Balances:**
+1. **Fetch Wallet Balances:**  
   Retrieve the user's wallet balances along with token details.
 
   - **Endpoint**: GET /api/balance
@@ -35,7 +35,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns an object containing the balances and token details.
 
-2. **Fetch Orders from the Order Book:**
+2. **Fetch Orders from the Order Book:**  
   Retrieve the list of orders for a user.
 
   - **Endpoint**: GET /api/orderbook
@@ -44,7 +44,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns an array of orders linked to the wallet address.
 
-3. **Fetch Specific Order Details:**
+3. **Fetch Specific Order Details:**  
   Retrieve details of a specific order using its hash.
 
   - **Endpoint**: GET /api/orderbook/order
@@ -53,7 +53,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns the details of the requested order.
 
-4. **Fetch Order Events**
+4. **Fetch Order Events**  
   Retrieve the status of an order (e.g., filled, canceled) using its hash.
 
   - **Endpoint**: GET /api/orderbook/events
@@ -62,7 +62,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns an object containing event details for the order.
 
-5. **Fetch Wallet History:**
+5. **Fetch Wallet History:**  
   Retrieve the transaction history for a specific wallet address.
 
   - **Endpoint**: GET /api/history
@@ -71,7 +71,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns a list of transaction details for the given wallet address.
 
-6. **Fetch Token Holdings:**
+6. **Fetch Token Holdings:**  
   Retrieve the list of tokens held in the user's portfolio.
 
   - **Endpoint**: GET /api/portfolio/holdings
@@ -80,7 +80,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns an array of tokens currently held by the wallet address.
 
-7. **Fetch Portfolio Current Value:**
+7. **Fetch Portfolio Current Value:**  
   Retrieve the current value of the user's portfolio in USD.
 
   - **Endpoint**: GET /api/portfolio/current-value
@@ -89,14 +89,14 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns the current total value of the portfolio in USD.
 
-8. **Fetch Supported Chains:**
+8. **Fetch Supported Chains:**  
   Retrieve the list of blockchain networks supported by the API.
 
   - **Endpoint**: GET /api/portfolio/supported-chains
   - **Response**:
     - Returns an object containing the list of supported blockchain networks.
 
-9. **Analyze Portfolio Profit and Loss:**
+9. **Analyze Portfolio Profit and Loss:**  
   Retrieve an analysis of the user's portfolio, including profit/loss and ROI details.
 
   - **Endpoint**: GET /api/portfolio/profit-and-loss
@@ -105,7 +105,7 @@ The 1-Inch Node.js API for the Bitte AI Plugin enables seamless interaction betw
   - **Response**:
     - Returns an object containing the profit/loss and ROI analysis for the user's portfolio.
 
-10. **Fetch Maker Orders:**
+10. **Fetch Maker Orders:**  
   Retrieve the list of orders created by a specific maker address.
 
   - **Endpoint**: GET /api/fusion-order/maker-orders
